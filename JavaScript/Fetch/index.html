@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    
+    <div class="row mt-2 mx-auto  " id="output">
+      
+    </div>
+  </body>
+  <script>
+     fetch('https://fakestoreapi.com/products').then((res)=>{
+        res.json().then((result)=>{
+           let resEl=document.getElementById('output')
+                result.map((eachProduct)=>(
+                    resEl.innerHTML+=`<div class=" col-3 mt-4 mb-2  " >  <div " class="card" style="width: 18rem;">
+  <img src="${eachProduct?.image}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${eachProduct?.title}</h5>
+    <p class="card-text">${eachProduct?.description}</p>
+    <p>price: ${eachProduct?.price}</p>
+  </div>
+</div>
+                        </div>`))
+        }).catch((error)=>{
+            console.log(error)
+        })
+     }).catch((err)=>{
+        console.log(err)
+     })
+     
+  </script>
+</html>

@@ -185,9 +185,12 @@ const companyData = [
 
 
 // Print all employee names from all companies.
-let allEmployee = companyData.map((eachEmployee)=>eachEmployee.employees).flat(Infinity)
-allEmployee.forEach((eachData)=>
-console.log(eachData.name))
+let allEmployes = companyData
+  .map((eachData) => eachData.employees)
+  .flat(Infinity);
+let flattendArray = allEmployes.map((eachData) => eachData.name);
+console.log(flattendArray);
+console.log("-----------------------");
 
 
 // Find the employee with the highest salary.

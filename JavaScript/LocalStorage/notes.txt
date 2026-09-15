@@ -12,3 +12,99 @@ getItem() -> used to access or retrieve data in local storage. The method takes 
 removeItem() -> used to delete an item from local storage. It requires Key as paramater
 
 clear() -> used to clear all values stored in local storage . Doesnot require any paramater
+
+
+
+API are classified into two:
+ 1. Client side APIs 
+ 2. Server side APIs
+
+
+ Client side APIs into two:
+  1. Browser APIs -> APIs that are built in the browser like Geolocation API etc,..
+  2.Third-party APIs -> APIs which are been taken from other sources such as GoogleCloud console or MetaCloud console
+
+
+  
+  Server side APIs:
+    - REST(Representational State Transfer) -> JSON,HML - highly felxible ,lightweight, and scalable - standard public web APIs social m,edia platforms
+    - GraphQL -> JSON - prevents overfetching client request exact data neeeded - mobile apps complex data dashboards
+    - gRPC(Google Remote Procedure Call) -> Protocol Buffers - High performance,untrala low latency - microservies,realtime backend communication
+    - SOAP (Simple Object Access Protocol) -> xml strictly - rigidly structures, formal security (ws-security) - enterprise legacy systems regulated bank tarnsfer
+    - Webhooks -> JSON,XML - Push based reverse API - real time payment alerts
+    - WebSockets
+
+
+
+
+
+
+
+
+
+
+
+    Stack
+
+
+    Heap -> Used for storing variables whose size is unknown at compile time or may vary at the runtime ,such as objects,arrays,functions,etc.JavaScriptEngine dynamically allocate memory to Heap
+
+    Values and Reference
+    JS allocate memory for objects within the heap , but we must have a reference to that memory location to access the value, the reference to memory location resides in stack memory
+
+
+    Stack Overflow -
+    Memory Leak
+    Garbage COllection
+    Call Stack
+
+
+    JS operates in a single-threaded environment, meaning that it can execute only one operation at a time. The Call Stack is the part of JS that keeps track of the execution process.
+
+    Function Call :- When a function is invoked, it is pushed into the call stack and stays there until execution completes
+
+
+    Event Loop -> Continously checks if the call stack is empty and pushes tasks from the microtask/priority queue or task/non priority queue to the call stack for execution
+
+    Event loop in JS enables asynchronous Programming by handling tasks efficiently . Since JS is single threaded , it uses the event loop to manage the exeecution of multiple tasks without blocking the main thread
+
+    Microtask Queue/priority
+    Microtasks are tasks that are executed asynchronouslly , but right after the currently executing script. They are usually high-priority tasks and are often used for things like promises and mutation observers. Eg:- API calls 
+
+    Macrotask Queue/Non-priority
+    Macrotasks are tasks that are executed asynchronouslly, but they are placed at the end of the event queue and executed after the microstasks, Common examaples include SetTimeout, SetInterval, and DOM event handlers.console log has less priority
+
+
+
+Callback Hell ->situation in JS where multiple asynchronous functions are nested inside one another,making the code look like a sideways pyramid and make it hard to read or fix
+
+
+AJAX
+• AJAX is not a programming language.
+• AJAX just uses a comnbination of: A browser buill-in XML.HTTPRequest object (to request data fron a
+web server) JavaScript and HTML DOM (to display or use the data)
+Ajax is just a means of loading data from tha; server and sclcctively updating parts of a wcb pagc without reloading the whole pagc.
+Basically, what Ajax does is make use of the browser's built-in XMLHtpRequest (XHR) objoct to send and receive information to and from a wcb server asynchronously, in thıe back ground, wilhoul blocking the pagc or interfering with thc user's cxperiencc.
+The examplc of somc largc-scalc Ajax-driven online applications are: Gimail, Googlc Maps, Gioogle Docs, YouTube, Faccbook, Flickr, and so many other applications. 
+
+
+
+
+
+
+Fetch API
+THe Fetch()API is a built-in modern JS interface used to make asynchronous HTTP requests. It is entirely promise-based, making it cleaner than older methods like XMLHtpRequest
+
+
+Promise
+A promise always exists in one of three mutually exclusive states
+ Pending: The initial state. The asynchronous operation is still actively running.
+
+ Fulfilled: The operation completed successfully. The promise receives with a resulting value.
+
+ Rejected: The operation failed. The promise settles with a reason or error message.
+
+
+Then catch
+
+ .then() handles resolved or rejected promises, while .catch() handles errors or rejections in the promise chain.

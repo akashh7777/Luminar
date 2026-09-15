@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> Table</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen p-6">
+
+    <div class="max-w-7xl mx-auto">
+
+        <div class="relative overflow-x-auto bg-white shadow-md rounded-lg border border-gray-200">
+
+            <table class="w-full text-sm text-left text-gray-600">
+                <thead class="text-sm text-white bg-blue-600">
+                    <tr>
+
+                        <th scope="col" class="px-6 py-4 font-semibold">
+                            ID
+                        </th>
+
+                        <th scope="col" class="px-6 py-4 font-semibold">
+                            Post ID
+                        </th>
+
+                        <th  scope="col" class="px-6 py-4 font-semibold">
+                            Name
+                        </th>
+
+                        <th scope="col" class="px-6 py-4 font-semibold">
+                            Email
+                        </th>
+
+                        <th scope="col" class="px-6 py-4 font-semibold">
+                            Comment
+                        </th>
+
+                    </tr>
+                </thead>
+
+                <tbody id="tableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+    
+</body>
+<script>
+
+        fetch("https://api.mydummyapi.com/comments")
+
+            .then((res) => {
+                return res.json();
+            })
+
+            .then((result) => {
+
+                let resEl = document.getElementById("tableBody");
+
+                result.map((eachProduct) => {
+
+                    resEl.innerHTML += `
+
+                        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+
+                            <th
+                                scope="row"
+                                class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap"
+                            >
+                                ${eachProduct?.id}
+                            </th>
+
+                            <td class="px-6 py-4">
+                                ${eachProduct?.postId}
+                            </td>
+
+                            <td class="px-6 py-4">
+                                ${eachProduct?.name}
+                            </td>
+
+                            <td style="color:rgb(4,137,201) ;" class="px-6 py-4 ">
+                                ${eachProduct?.email}
+                            </td>
+
+                            <td class="px-6 py-4 max-w-md">
+                                ${eachProduct?.body}
+                            </td>
+
+                        </tr>
+
+                    `;
+                });
+
+            })
+
+            .catch((error) => {
+                console.log(error);
+            });
+
+    </script>
+</html>
+

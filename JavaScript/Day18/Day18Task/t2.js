@@ -192,78 +192,71 @@ console.log(flattendArray);
 console.log("-----------------------");
 
 // Find the employee with the highest salary.
-let highestSalary = allEmployes.reduce((acc, curr) =>
-  acc.salary > curr.salary ? acc : curr,
-);
-console.log(highestSalary);
+let highSal = allEmployes.reduce((acc,curr)=>acc['salary']>curr['salary']?acc:curr)
+console.log(highSal)
 console.log("-----------------------");
 
 // Print employees who have more than 2 skills.
 
-let moreThan2 = allEmployes.filter((eachData) => eachData.skills.length > 2);
-console.log(moreThan2);
+let Mt2Skill = allEmployes.filter((eachData)=>eachData.skills.length>2)
+console.log(Mt2Skill)
 console.log("-----------------------");
 
 // Print all project names from all companies.
 
-let allProject = allEmployes
-  .map((eachData) => eachData.projects)
-  .flat(Infinity);
-let projectNames = allProject.map((eachData) => eachData.name);
-console.log(projectNames);
+let allProject = allEmployes.map((eachProject)=>eachProject.projects).flat(Infinity)
+allProject.forEach((eachData)=>
+console.log(eachData.name))
 console.log("-----------------------");
 
 // Print employees who have at least one ongoing project.
 
-let projectStatus =allEmployes.filter(
-  (eachEmp) => eachEmp.projects.some((eachProject)=>eachProject.status == "Ongoing",
-));
-console.log(projectStatus);
+let ongoing = allEmployes.filter((eachData)=>eachData.projects.some((eachPro)=>eachPro.status=="Ongoing"))
+console.log(ongoing)
 console.log("-----------------------");
 
 // Calculate the total salary expense for each company.
 
-companyData.forEach((eachData) => {
-  let companyName = eachData.name;
-  let employees = eachData.employees;
-
-  let totalSalary = employees.reduce((acc, curr) => acc + curr["salary"], 0);
-  console.log(companyName, totalSalary);
-});
+companyData.forEach((eachData)=>{
+    let companyName = eachData.name
+    let employee = eachData.employees
+    let totalSal = employee.reduce((acc,curr)=>acc+curr['salary'],0)
+    console.log(companyName,totalSal)
+})
 console.log("-----------------------");
 
 // Find the company with the highest number of employees.
 
+ let highestNumberEmployees = companyData.reduce((acc,curr)=>acc.employees.length>curr.employees.length?acc:curr)
+  console.log(highestNumberEmployees.name , highestNumberEmployees.employees.length )
+  console.log("-----------------------");
 
 // Find the most commonly used technology across all projects.
 
-
-
-let allTech = allProject.map((eachProject) => eachProject.technologies).flat(Infinity);
-
-let count = {};
-
-allTech.forEach((eachTech) => {
-  if (eachTech in count) {
-    count[eachTech] += 1;
-  } else {
-    count[eachTech] = 1;
+let allTech =allProject.map((eachTechnology)=>eachTechnology.technologies).flat(Infinity)
+let count={}
+allTech.forEach((eachTech)=>{
+  if(eachTech in count){
+    count[eachTech]+=1
+  }else{
+    count[eachTech]=1
   }
-});
-
-let countArray =Object.entries(count)
-let highestTech = countArray.reduce((acc,curr)=>acc[1]>curr[1]?acc:curr)
-console.log(highestTech)
+})
+console.log(count)
+let countArray = Object.entries(count)
+let commonTech = countArray.reduce((acc,curr)=>acc[1]>curr[1]?acc:curr)
+console.log(commonTech)
 console.log("-----------------------");
 
 
 // Print employees who have both "JavaScript" and "React" as skills.
 
-let bothJSAndReact =allEmployes.filter(
-  (eachEmp)=>eachEmp.skills.includes("JavaScript")&&
-  eachEmp.skills.includes("React")
-)
-console.log(bothJSAndReact)
+let bothJAndR=allEmployes.filter((eachData)=>eachData.skills.includes("JavaScript")&&eachData.skills.includes("React"))
+console.log(bothJAndR)
+console.log("-----------------------");
 
 
 // Find employees who have no projects.
+
+let noProject = allEmployes.filter((eachData)=>eachData.projects.length==0)
+console.log(noProject)
