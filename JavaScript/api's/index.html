@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>GitHub</title>
+    <link
+      rel="shortcut icon"
+      href="https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_1280.png"
+      type="image/x-icon"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+          sans-serif;
+
+        min-height: 100vh;
+        padding: 60px 20px;
+
+        background:
+          radial-gradient(
+            circle at 10% 10%,
+            rgba(46, 164, 79, 0.12),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 90% 90%,
+            rgba(47, 129, 247, 0.1),
+            transparent 30%
+          ),
+          #0d1117;
+
+        color: #f0f6fc;
+      }
+
+      /* MAIN */
+
+      .container {
+        width: 100%;
+        max-width: 720px;
+        margin: auto;
+      }
+
+      /* SEARCH CARD */
+
+      .search-card {
+        padding: 40px;
+
+        background: rgba(22, 27, 34, 0.95);
+
+        border: 1px solid #30363d;
+        border-radius: 16px;
+
+        text-align: center;
+
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      }
+
+      .github-icon {
+        width: 60px;
+        height: 60px;
+
+        margin: auto;
+        margin-bottom: 18px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #21262d;
+        border: 1px solid #30363d;
+
+        font-size: 28px;
+      }
+
+      .search-card h1 {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        color: #8b949e;
+        font-size: 14px;
+        margin-bottom: 28px;
+      }
+
+      /* SEARCH */
+
+      .search-area {
+        display: flex;
+        gap: 10px;
+      }
+
+      .input-wrapper {
+        position: relative;
+        flex: 1;
+      }
+
+      .search-icon {
+        position: absolute;
+
+        left: 15px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: #8b949e;
+
+        font-size: 19px;
+      }
+
+      .search-area input {
+        width: 100%;
+        height: 48px;
+
+        padding: 0 15px 0 42px;
+
+        background: #0d1117;
+        color: #f0f6fc;
+
+        border: 1px solid #30363d;
+        border-radius: 8px;
+
+        outline: none;
+
+        font-size: 14px;
+
+        transition: 0.2s;
+      }
+
+      .search-area input::placeholder {
+        color: #6e7681;
+      }
+
+      .search-area input:focus {
+        border-color: #2f81f7;
+
+        box-shadow: 0 0 0 3px rgba(47, 129, 247, 0.2);
+      }
+
+      .search-btn {
+        height: 48px;
+
+        padding: 0 22px;
+
+        background: #238636;
+        color: white;
+
+        border: 1px solid rgba(240, 246, 252, 0.1);
+        border-radius: 8px;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+      }
+
+      .search-btn:hover {
+        background: #2ea043;
+      }
+
+      /* PROFILE CARD */
+
+      .profile-card {
+        padding:0 10px 15px 10px;
+        margin-top: 25px;
+
+        background: #161b22;
+
+        border: 1px solid #30363d;
+        border-radius: 16px;
+
+        overflow: hidden;
+
+        box-shadow: 0 15px 40px  rgba(0, 0, 0, 0.3);
+      }
+
+      /* PROFILE HEADER */
+
+      .profile-header {
+        height: 120px;
+
+        background: linear-gradient(135deg, #161b22, #1f2937, #0d1117);
+
+        border-bottom: 1px solid #30363d;
+      }
+
+      /* PROFILE CONTENT */
+
+      .profile-content {
+        padding: 0 30px 30px;
+      }
+
+      .profile-top {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+
+      /* AVATAR */
+
+      .avatar {
+        width: 110px;
+        height: 110px;
+
+        margin-top: -55px;
+
+        border-radius: 50%;
+
+        background: #0d1117;
+
+        border: 5px solid #161b22;
+
+        overflow: hidden;
+
+        flex-shrink: 0;
+      }
+
+      .avatar img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        display: block;
+      }
+
+      .profile-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 16px;
+
+  background: #21262d;
+  color: #f0f6fc;
+
+  border: 1px solid #30363d;
+  border-radius: 7px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+.profile-link:hover {
+  background: #30363d;
+  border-color: #8b949e;
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+.profile-link:active {
+  transform: translateY(0);
+}
+
+      /* NAME */
+
+      .profile-name {
+        margin-top: 18px;
+      }
+
+      .profile-name h2 {
+        font-size: 24px;
+        line-height: 1.3;
+      }
+
+      .username {
+        color: #8b949e;
+        font-size: 15px;
+        margin-top: 3px;
+      }
+
+      /* BIO */
+
+      .bio {
+        margin-top: 18px;
+
+        color: #c9d1d9;
+
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      /* DETAILS */
+
+      .details {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 18px;
+
+        margin-top: 18px;
+
+        color: #8b949e;
+
+        font-size: 13px;
+      }
+
+      .detail {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* STATS */
+
+      .stats {
+        display: flex;
+
+        gap: 25px;
+
+        margin-top: 24px;
+        padding-top: 20px;
+
+        border-top: 1px solid #21262d;
+      }
+
+      .stat {
+        color: #8b949e;
+
+        font-size: 13px;
+      }
+
+      .stat strong {
+        color: #f0f6fc;
+
+        font-size: 16px;
+
+        margin-right: 4px;
+      }
+
+      /* REPOSITORIES */
+
+      .repositories {
+        margin-top: 25px;
+      }
+
+      .repositories h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+
+      .repo-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+      }
+
+      .repo {
+        padding: 14px;
+
+        background: #0d1117;
+
+        border: 1px solid #30363d;
+        border-radius: 8px;
+
+        transition: 0.2s;
+      }
+
+      .repo:hover {
+        border-color: #8b949e;
+      }
+
+      .repo-name {
+        color: #58a6ff;
+
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .repo-description {
+        margin-top: 6px;
+
+        color: #8b949e;
+
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .repo-language {
+        display: inline-block;
+
+        margin-top: 10px;
+
+        color: #8b949e;
+
+        font-size: 11px;
+      }
+
+      /* RESPONSIVE */
+
+      @media (max-width: 600px) {
+        body {
+          padding: 25px 15px;
+        }
+
+        .search-card {
+          padding: 28px 20px;
+        }
+
+        .search-area {
+          flex-direction: column;
+        }
+
+        .search-btn {
+          width: 100%;
+        }
+
+        .profile-content {
+          padding: 0 20px 25px;
+        }
+
+        .profile-header {
+          height: 100px;
+        }
+
+        .avatar {
+          width: 90px;
+          height: 90px;
+
+          margin-top: -45px;
+
+          font-size: 34px;
+        }
+
+        .profile-name h2 {
+          font-size: 21px;
+        }
+
+        .repo-list {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- SEARCH -->
+
+      <div class="search-card">
+        <div class="github-icon">◉</div>
+
+        <h1>Search GitHub</h1>
+
+        <p class="subtitle">Find repositories, developers, and projects</p>
+
+        <div class="search-area">
+          <div class="input-wrapper">
+            <span class="search-icon">⌕</span>
+
+            <input
+              id="userInput"
+              type="text"
+              placeholder="Search repositories, users..."
+            />
+          </div>
+
+          <button onclick="fetchData()" class="search-btn">Search</button>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+
+      <div id="result"></div>
+    </div>
+  </body>
+  <script>
+    const fetchData = async () => {
+      try {
+        let inputVal = document.getElementById("userInput").value;
+        let apiResponse = await fetch(
+          `https://api.github.com/users/${inputVal}`,
+        );
+        let apiData = await apiResponse.json();
+        console.log(apiData);
+        let resultElement = document.getElementById("result");
+        resultElement.innerHTML = `<div class="profile-card">
+
+      <div class="profile-header"></div>
+
+      <div class="profile-content">
+
+        <div class="profile-top">
+
+          <div class="avatar">
+  <img src="${apiData?.avatar_url}" alt="GitHub Profile">
+</div>
+
+          
+           <a href="${apiData?.html_url}"
+            class="profile-link"
+            target="_blank">
+            View GitHub Profile ↗
+            </a>
+      </div>
+          
+
+        </div>
+
+
+        <div class="profile-name">
+
+          <h2>${apiData?.name}</h2>
+
+          <p class="username">
+            ${apiData?.login}
+          </p>
+
+        </div>
+
+
+        <p class="bio">
+          
+        </p>
+
+
+        <div class="details">
+
+          <div class="detail">
+            📍${apiData?.location}
+          </div>
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+          <div class="stat">
+            <strong>${apiData?.public_repos}</strong>
+            repositories
+          </div>
+
+          <div class="stat">
+            <strong>${apiData?.followers}</strong>
+            followers
+          </div>
+
+          <div class="stat">
+            <strong>${apiData?.following}</strong>
+            following
+          </div>
+
+        </div>
+
+
+        <!-- REPOSITORIES -->
+
+        <div class="repositories">
+
+          <h3>Popular repositories</h3>
+
+          <div class="repo-list">
+
+            <div class="repo">
+
+              <div class="repo-name">
+                portfolio
+              </div>
+
+              <p class="repo-description">
+                Personal developer portfolio website.
+              </p>
+
+              <span class="repo-language">
+                ● JavaScript
+              </span>
+
+            </div>
+
+
+            <div class="repo">
+
+              <div class="repo-name">
+                ai-project
+              </div>
+
+              <p class="repo-description">
+                AI-powered web application project.
+              </p>
+
+              <span class="repo-language">
+                ● React
+              </span>
+
+            </div>
+
+
+            <div class="repo">
+
+              <div class="repo-name">
+                javascript-practice
+              </div>
+
+              <p class="repo-description">
+                JavaScript learning and practice programs.
+              </p>
+
+              <span class="repo-language">
+                ● JavaScript
+              </span>
+
+            </div>
+
+
+            <div class="repo">
+
+              <div class="repo-name">
+                web-design
+              </div>
+
+              <p class="repo-description">
+                Modern responsive website designs.
+              </p>
+
+              <span class="repo-language">
+                ● HTML
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>`;
+      } catch (error) {
+        console.log(error);
+        alert("Something Went Wrong While Fetching Data");
+      }
+    };
+  </script>
+</html>
