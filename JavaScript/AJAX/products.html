@@ -12,6 +12,10 @@
     />
   </head>
   <body>
+    <div class="d-flex justify-content-center mt-5">
+      <select onchange="onCatClick(this.value)" id="selectRes" name="" >
+        </select>
+    </div>
     <div class="row mt-4 mb-5" id="result"></div>
   </body>
   <script>
@@ -19,13 +23,29 @@
 
     xmlObj.open("get", "https://dummyjson.com/products");
     xmlObj.send();
+    let apiResponse=[]
     xmlObj.onreadystatechange = () => {
       if (xmlObj.readyState == 4) {
         if (xmlObj.status == 200) {
-          let apiResponse = xmlObj.response;
+          apiResponse = xmlObj.response;
 
           apiResponse = JSON.parse(apiResponse).products;
           console.log(apiResponse);
+          // let allCategories = apiResponse.map((eachProduct)=>eachProduct.category)
+          // console.log(allCategories)
+          let allCategories=[]
+          apiResponse.forEach((eachPro)=>{
+            if(!allCategories.includes(eachPro.category)){
+              allCategories.push(eachPro.category)
+            }
+          })
+          console.log(allCategories)
+          let selectResult = document.getElementById('selectRes')
+          allCategories.map((eachCategory)=>{
+            selectResult.innerHTML +=`<option value="${eachCategory}">${eachCategory}
+          
+        </option>`
+          })
 
           let resEl = document.getElementById("result");
 
@@ -43,5 +63,8 @@
         }
       }
     };
+    const onCatClick=(cat)=>{
+      console.log(cat)
+    }
   </script>
 </html>
