@@ -13,9 +13,10 @@
   </head>
   <body>
     <div class="d-flex justify-content-center mt-5">
-      <select onchange="onCatClick(this.value)" id="selectRes" name="" >
-        </select>
+      <select onchange="onCatClick(this.value)" id="selectRes" name=""></select>
     </div>
+    <button onclick="displayData()">saved Products</button>
+
     <div class="row mt-4 mb-5" id="result"></div>
   </body>
   <script>
@@ -23,7 +24,7 @@
 
     xmlObj.open("get", "https://dummyjson.com/products");
     xmlObj.send();
-    let apiResponse=[]
+    let apiResponse = [];
     xmlObj.onreadystatechange = () => {
       if (xmlObj.readyState == 4) {
         if (xmlObj.status == 200) {
@@ -33,19 +34,19 @@
           console.log(apiResponse);
           // let allCategories = apiResponse.map((eachProduct)=>eachProduct.category)
           // console.log(allCategories)
-          let allCategories=[]
-          apiResponse.forEach((eachPro)=>{
-            if(!allCategories.includes(eachPro.category)){
-              allCategories.push(eachPro.category)
+          let allCategories = [];
+          apiResponse.forEach((eachPro) => {
+            if (!allCategories.includes(eachPro.category)) {
+              allCategories.push(eachPro.category);
             }
-          })
-          console.log(allCategories)
-          let selectResult = document.getElementById('selectRes')
-          allCategories.map((eachCategory)=>{
-            selectResult.innerHTML +=`<option value="${eachCategory}">${eachCategory}
+          });
+          console.log(allCategories);
+          let selectResult = document.getElementById("selectRes");
+          allCategories.map((eachCategory) => {
+            selectResult.innerHTML += `<option value="${eachCategory}">${eachCategory}
           
-        </option>`
-          })
+        </option>`;
+          });
 
           let resEl = document.getElementById("result");
 
@@ -56,15 +57,70 @@
   <div class="card-body">
     <h5 class="card-title">${eachProduct?.title}</h5>
     <p class="card-text">${eachProduct?.description}</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+    <button onclick="onSaveClick(${eachProduct.id})"  class="btn btn-primary">Save</button>  </div>
 </div></div>`),
           );
         }
       }
     };
-    const onCatClick=(cat)=>{
-      console.log(cat)
-    }
+    const onCatClick = (cat) => {
+      console.log(cat);
+
+      let filteredData = apiResponse.filter(
+        (eachData) => eachData.category == cat,
+      );
+      console.log(filteredData);
+      let resEl = document.getElementById("result");
+      resEl.innerHTML = "";
+      filteredData.map(
+        (eachProduct) =>
+          (resEl.innerHTML += `<div class="col-3"><div class="card" style="width: 18rem;">
+  <img src=${eachProduct?.thumbnail} class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${eachProduct?.title}</h5>
+    <p class="card-text">${eachProduct?.description}</p>
+    <button onclick="onSaveClick(${eachProduct.id})" class="btn btn-primary">Save</button>
+  </div>
+</div></div>`),
+      );
+    };
+
+    const onSaveClick = (id) => {
+      console.log(id);
+      let savedItem = JSON.parse(localStorage.getItem("savedItem")) || [];
+      let product = apiResponse.find((eachProduct) => eachProduct.id == id);
+      savedItem.unshift(product);
+      localStorage.setItem("savedItem", JSON.stringify(savedItem));
+      console.log(savedItem);
+    };
+
+    const displayData = () => {
+      let savedItem = JSON.parse(localStorage.getItem("savedItem")) || [];
+      let result = document.querySelector("#result");
+
+      result.innerHTML = " ";
+
+      savedItem.map((eachProduct) => {
+        result.innerHTML += `<div class="col-3"><div class="card" style="width: 18rem;">
+  <img src=${eachProduct?.thumbnail} class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${eachProduct?.title}</h5>
+    <p class="card-text">${eachProduct?.description}</p>
+    <button onclick="deleteData(${eachProduct.id})" class="btn btn-primary">Delete</button>
+  </div>
+</div></div>`;
+      });
+    };
+    const deleteData = (id) => {
+  let savedItem =
+    JSON.parse(localStorage.getItem("savedItem")) || [];
+
+  let newArray = apiResponse.filter(
+    (eachPro) => eachPro.id != id,
+  );
+
+  localStorage.setItem("savedItem", JSON.stringify(newArray));
+  displayData()
+};
   </script>
 </html>
