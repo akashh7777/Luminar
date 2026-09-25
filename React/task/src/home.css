@@ -1,0 +1,29 @@
+.home {
+  max-width: 1000px;
+  margin: auto;
+  padding: 70px 40px;
+}
+
+.home section {
+  margin-bottom: 55px;
+}
+
+.home h1 {
+  font-size: 38px;
+  margin-bottom: 20px;
+}
+
+.home h2 {
+  font-size: 27px;
+  margin-bottom: 12px;
+}
+
+.home p {
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.home ul {
+  line-height: 2;
+  font-size: 17px;
+}
