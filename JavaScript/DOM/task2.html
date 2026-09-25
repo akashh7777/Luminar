@@ -71,7 +71,11 @@ When clicked:
       src="https://img.magnific.com/free-photo/responsible-student_23-2147650755.jpg?semt=ais_hybrid&w=740&q=80"
       alt="student image"
     />
-         <h2 style="margin-top:50px;" >Name : Merlin <br>Course : MEARN Stack <br> Email : merlinjohn@gmail.com</h2>
+        <div style="margin-top:50px;">
+           <h2 >Name : Merlin </h2>
+            <h2>Course : MEARN Stack</h2>
+            <h2>Email : merlin@gmail.com</h2>
+        </div>
         <div style="margin-left: 200px;">
             <button style="border-radius: 20px;" type="button" class="btn btn-primary" onclick="updateProfile()">Update Profile</button><br><br>
             <button style="border-radius: 20px;" type="button" class="btn btn-success">Highlight Subjects</button><br><br>
@@ -116,18 +120,16 @@ When clicked:
           </div>
         </div>
     </div>
-   
-   <button>Update Profile</button>
-   <button>Highlight Subjects</button>
-   <button>Reset</button>
-
   </body>
   <script>
     const updateProfile=()=>{
-        let element = document.getElementsByTagName('h2')[1]
+        let element = document.getElementsByTagName('h2')[0]
+        console.log(element)
         element.innerText="Name : Jessica"
-    let element1 = document.getElementsByTagName('h2')[2]
-        element1.innerText="Course"    
+      let element1 = document.getElementsByTagName('h2')[1]
+        element1.innerText="Course : Full-Stack"    
+        let element2 = document.getElementsByTagName('h2')[2]
+        element2.innerText="Email : jessica@gmail.com"
     }
   </script>
 </html>

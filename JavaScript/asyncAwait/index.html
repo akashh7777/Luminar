@@ -1,318 +1,536 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Async Await</title>
-    <style>
-      body {
-        background: #f4f6f9;
-        font-family: Arial, sans-serif;
-      }
-      .container {
-        width: 100%;
-        max-width: 100%;
-        padding-left: 20px;
-        padding-right: 20px;
-      }
 
-      /* Page Header */
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <title>Async Await</title>
+
+  <style>
+    body {
+      background: #eef2f7;
+      font-family: Arial, sans-serif;
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 100%;
+    }
+
+    .page-title {
+      color: #111827;
+      font-size: 32px;
+      letter-spacing: -0.5px;
+    }
+
+    .text-muted {
+      color: #6b7280 !important;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    input {
+      padding: 8px;
+      width: 250px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #4f46e5;
+    }
+
+    button {
+      padding: 8px 15px;
+      background: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    button:hover {
+      background: #333;
+    }
+
+    .table-card {
+      border: none;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .todo-table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .todo-table thead th {
+      background: #4f46e5;
+      color: #ffffff;
+      padding: 16px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .todo-table tbody tr {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      transition: background 0.2s ease;
+    }
+
+    .todo-table tbody tr:hover {
+      background: #f8faff;
+    }
+
+    .todo-table tbody td {
+      padding: 18px 20px;
+      border: none;
+      vertical-align: middle;
+    }
+
+    .id-badge {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ede9fe;
+      color: #5b21b6;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .todo-text {
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status.completed {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .status.pending {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .user-id {
+      display: inline-block;
+      padding: 6px 10px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      color: #4b5563;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .action-btn {
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 13px;
+      margin-right: 5px;
+    }
+
+    .edit-btn {
+      background: #f59e0b;
+    }
+
+    .edit-btn:hover {
+      background: #d97706;
+    }
+
+    .delete-btn {
+      background: #dc2626;
+    }
+
+    .delete-btn:hover {
+      background: #b91c1c;
+    }
+
+    @media (max-width: 768px) {
       .page-title {
-        color: #212529;
+        font-size: 26px;
       }
 
-      /* Table Card */
-      .table-card {
-        width: 100%;
-        border: none;
-        border-radius: 18px;
-        overflow: hidden;
-        background: white;
-      }
-
-      /* Table */
-      .todo-table {
-        border-collapse: separate;
-        border-spacing: 0 8px;
-        padding: 0 12px;
-        width: 100%;
-      }
-
-      /* Table Header */
-      .todo-table thead th {
-        background: #212529;
-        color: white;
-        padding: 18px;
-        font-size: 14px;
-        font-weight: 600;
-        border: none;
-      }
-
-      .todo-table thead th:first-child {
-        border-radius: 10px 0 0 10px;
-      }
-
-      .todo-table thead th:last-child {
-        border-radius: 0 10px 10px 0;
-      }
-
-      /* Table Rows */
-      .todo-table tbody tr {
-        background: #ffffff;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        transition: all 0.2s ease;
-      }
-
-      .todo-table tbody tr:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-      }
-
+      .todo-table thead th,
       .todo-table tbody td {
-        padding: 17px 18px;
-        border: none;
-        vertical-align: middle;
+        padding: 14px;
       }
 
-      .todo-table tbody tr td:first-child {
-        border-radius: 10px 0 0 10px;
-      }
-
-      .todo-table tbody tr td:last-child {
-        border-radius: 0 10px 10px 0;
-      }
-
-      /* ID Badge */
-      .id-badge {
-        width: 38px;
-        height: 38px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: #eef2ff;
-        color: #4f46e5;
-        border-radius: 10px;
-        font-weight: 700;
-      }
-
-      /* Todo Text */
       .todo-text {
-        font-weight: 500;
-        color: #343a40;
+        font-size: 14px;
       }
 
-      /* Status */
-      .status {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 7px 12px;
-        border-radius: 20px;
-        font-size: 13px;
-        font-weight: 600;
+      .search-box {
+        flex-wrap: wrap;
       }
 
-      /* Completed */
-      .status.completed {
-        background: #d1fae5;
-        color: #047857;
+      input {
+        width: 100%;
       }
+    }
+  </style>
+</head>
 
-      /* Pending */
-      .status.pending {
-        background: #fff3cd;
-        color: #997404;
-      }
+<body>
 
-      /* Status Dot */
-      .status-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: currentColor;
-      }
+  <div class="container py-5">
 
-      /* User ID */
-      .user-id {
-        display: inline-block;
-        padding: 7px 11px;
-        background: #f1f3f5;
-        border-radius: 8px;
-        color: #495057;
-        font-weight: 600;
-      }
-      #searchBox {
-  width: 250px;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  outline: none;
-}
-
-#searchBox:focus {
-  border-color: #555;
-}
-
-button {
-  padding: 10px 18px;
-  margin-left: 5px;
-  border: none;
-  border-radius: 6px;
-  background: #24292f;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #000;
-}
-    </style>
-  </head>
-  <body>
-    <div class="container py-5">
-      <!-- Page Header -->
-     
-       <div class="mb-4">
-           <h2 class="fw-bold mb-1 page-title">Todos</h2>
-           <p class="text-muted mb-0">User todos and completion details</p>
-           
-           
-     </div>
-        
-        <div>
-          <input id="searchBox" type="text">
-           <button onclick="onSearchClick()">Search</button>
-           <button onclick="apiFetch()">Reset</button>
-        </div>
-      <!-- Table Card -->
-      <div class="card table-card shadow-sm">
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table todo-table mb-0">
-              <!-- Table Header -->
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Todo</th>
-                  <th>Status</th>
-                  <th>User ID</th>
-                </tr>
-              </thead>
-
-              <!-- API Data -->
-              <tbody id="tableBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <!-- Page Header -->
+    <div class="mb-4">
+      <h2 class="fw-bold mb-1 page-title">Todos</h2>
+      <p class="text-muted mb-0">
+        User todos and completion details
+      </p>
     </div>
-  </body>
+
+    <!-- Search -->
+    <div class="search-box">
+
+      <input
+        id="searchInp"
+        placeholder="Search todo..."
+        type="text"
+      />
+
+      <button onclick="onSearchClick()">
+        Search
+      </button>
+
+      <button onclick="apiFetch()">
+        Reset
+      </button>
+
+    </div>
+
+    <!-- Table Card -->
+    <div class="card table-card shadow-sm">
+
+      <div class="card-body p-0">
+
+        <div class="table-responsive">
+
+          <table class="table todo-table mb-0">
+
+            <!-- Table Header -->
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Todo</th>
+                <th>Status</th>
+                <th>User ID</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <!-- API Data -->
+            <tbody id="tableBody"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
   <script>
-    let data ={}
+
+    // Store API data
+    let data = [];
+
+    // Get table body
+    let tableBody = document.getElementById("tableBody");
+
+
+    // ==========================================
+    // FETCH API
+    // ==========================================
+
     const apiFetch = async () => {
-      let apiResult = await fetch("https://dummyjson.com/todos");
-      data = await apiResult.json();
-      console.log(data);
-      let tableBody = document.getElementById("tableBody");
-      tableBody.innerHTML=``
 
-      data.todos.map(
-        (eachTodo) =>
-          (tableBody.innerHTML += `
-                <tr>
-                  <td>
-                    <span class="id-badge">
-                      ${eachTodo?.id}
-                    </span>
-                  </td>
+      try {
 
-                  <td>
-                    <span class="todo-text">
-                      ${eachTodo?.todo}
-                    </span>
-                  </td>
+        let apiResult = await fetch(
+          "https://dummyjson.com/todos"
+        );
 
-                  <td>
-                    ${
-                      eachTodo?.completed
-                        ? `
-                          <span class="status completed">
-                            <span class="status-dot"></span>
-                            Completed
-                          </span>
-                        `
-                        : `
-                          <span class="status pending">
-                            <span class="status-dot"></span>
-                            Pending
-                          </span>
-                        `
-                    }
-                  </td>
+        data = await apiResult.json();
 
-                  <td>
-                    <span class="user-id">
-                      User #${eachTodo?.userId}
-                    </span>
-                  </td>
-                </tr>
-              `),
-      );
+        console.log(data);
+
+        displayTodos(data.todos);
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
     };
+
+
+    // ==========================================
+    // DISPLAY TODOS
+    // ==========================================
+
+    const displayTodos = (todos) => {
+
+      tableBody.innerHTML = "";
+
+      todos.map((eachTodo) => {
+
+        tableBody.innerHTML += `
+
+          <tr>
+
+            <!-- ID -->
+            <td>
+              <span class="id-badge">
+                ${eachTodo.id}
+              </span>
+            </td>
+
+
+            <!-- TODO -->
+            <td>
+              <span class="todo-text">
+                ${eachTodo.todo}
+              </span>
+            </td>
+
+
+            <!-- STATUS -->
+            <td>
+
+              ${
+                eachTodo.completed
+
+                  ? `
+
+                    <span class="status completed">
+
+                      <span class="status-dot"></span>
+
+                      Completed
+
+                    </span>
+
+                  `
+
+                  : `
+
+                    <span class="status pending">
+
+                      <span class="status-dot"></span>
+
+                      Pending
+
+                    </span>
+
+                  `
+              }
+
+            </td>
+
+
+            <!-- USER ID -->
+            <td>
+
+              <span class="user-id">
+
+                User #${eachTodo.userId}
+
+              </span>
+
+            </td>
+
+
+            <!-- ACTIONS -->
+            <td>
+
+              <button
+                class="action-btn edit-btn"
+                onclick="editTodo(${eachTodo.id})"
+              >
+                Edit
+              </button>
+
+
+              <button
+                class="action-btn delete-btn"
+                onclick="deleteTodo(${eachTodo.id})"
+              >
+                Delete
+              </button>
+
+            </td>
+
+          </tr>
+
+        `;
+
+      });
+
+    };
+
+
+    // ==========================================
+    // SEARCH
+    // ==========================================
+
+    const onSearchClick = () => {
+
+      let searchInput =
+        document
+          .getElementById("searchInp")
+          .value
+          .toLowerCase();
+
+
+      let newData = data.todos.filter(
+        (eachTodo) =>
+
+          eachTodo.todo
+            .toLowerCase()
+            .includes(searchInput)
+      );
+
+
+      console.log(newData);
+
+
+      displayTodos(newData);
+
+    };
+
+
+    // ==========================================
+    // DELETE
+    // ==========================================
+
+    const deleteTodo = (id) => {
+
+      let confirmDelete =
+        confirm(
+          "Are you sure you want to delete this todo?"
+        );
+
+
+      if (!confirmDelete) {
+        return;
+      }
+
+
+      // Remove todo from local data
+      data.todos = data.todos.filter(
+        (eachTodo) =>
+          eachTodo.id !== id
+      );
+
+
+      // Display updated data
+      displayTodos(data.todos);
+
+    };
+
+
+    // ==========================================
+    // EDIT
+    // ==========================================
+
+    const editTodo = (id) => {
+
+      // Find todo using ID
+      let todo = data.todos.find(
+        (eachTodo) =>
+          eachTodo.id === id
+      );
+
+
+      // Ask user for new todo
+      let newTodo =
+        prompt(
+          "Edit Todo",
+          todo.todo
+        );
+
+
+      // Cancel button
+      if (newTodo === null) {
+        return;
+      }
+
+
+      // Empty value
+      if (newTodo.trim() === "") {
+
+        alert(
+          "Todo cannot be empty"
+        );
+
+        return;
+
+      }
+
+
+      // Update todo
+      todo.todo = newTodo;
+
+
+      // Display updated data
+      displayTodos(data.todos);
+
+    };
+
+
+    // ==========================================
+    // INITIAL API CALL
+    // ==========================================
 
     apiFetch();
-    const onSearchClick=()=>{
-      let searchInput = document.getElementById('searchBox').value
-      console.log(searchInput)
-      console.log(data)
-      let newData = data.todos.filter((eachTodo)=>eachTodo.todo.toLowerCase().includes(searchInput.toLowerCase()))
-      console.log(newData)
-      tableBody.innerHTML=``
-      newData.map(
-        (eachTodo) =>
-          (tableBody.innerHTML += `
-                <tr>
-                  <td>
-                    <span class="id-badge">
-                      ${eachTodo?.id}
-                    </span>
-                  </td>
 
-                  <td>
-                    <span class="todo-text">
-                      ${eachTodo?.todo}
-                    </span>
-                  </td>
-
-                  <td>
-                    ${
-                      eachTodo?.completed
-                        ? `
-                          <span class="status completed">
-                            <span class="status-dot"></span>
-                            Completed
-                          </span>
-                        `
-                        : `
-                          <span class="status pending">
-                            <span class="status-dot"></span>
-                            Pending
-                          </span>
-                        `
-                    }
-                  </td>
-
-                  <td>
-                    <span class="user-id">
-                      User #${eachTodo?.userId}
-                    </span>
-                  </td>
-                </tr>
-              `),
-      );
-    };
-    
   </script>
+
+</body>
+
 </html>

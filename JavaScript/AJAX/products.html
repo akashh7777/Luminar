@@ -30,7 +30,7 @@
         if (xmlObj.status == 200) {
           apiResponse = xmlObj.response;
 
-          apiResponse = JSON.parse(apiResponse).products;
+          apiResponse = JSON.parse(apiResponse).apiResponse;
           console.log(apiResponse);
           // let allCategories = apiResponse.map((eachProduct)=>eachProduct.category)
           // console.log(allCategories)
@@ -57,6 +57,7 @@
   <div class="card-body">
     <h5 class="card-title">${eachProduct?.title}</h5>
     <p class="card-text">${eachProduct?.description}</p>
+     <p class="card-text">$${eachProduct?.price}</p>
     <button onclick="onSaveClick(${eachProduct.id})"  class="btn btn-primary">Save</button>  </div>
 </div></div>`),
           );
@@ -79,6 +80,7 @@
   <div class="card-body">
     <h5 class="card-title">${eachProduct?.title}</h5>
     <p class="card-text">${eachProduct?.description}</p>
+     <p class="card-text">$${eachProduct?.price}</p>
     <button onclick="onSaveClick(${eachProduct.id})" class="btn btn-primary">Save</button>
   </div>
 </div></div>`),
@@ -86,41 +88,60 @@
     };
 
     const onSaveClick = (id) => {
-      console.log(id);
       let savedItem = JSON.parse(localStorage.getItem("savedItem")) || [];
+
       let product = apiResponse.find((eachProduct) => eachProduct.id == id);
-      savedItem.unshift(product);
-      localStorage.setItem("savedItem", JSON.stringify(savedItem));
-      console.log(savedItem);
+
+      let alreadySaved = savedItem.some((eachProduct) => eachProduct.id == id);
+
+      if (!alreadySaved) {
+        savedItem.unshift(product);
+        localStorage.setItem("savedItem", JSON.stringify(savedItem));
+      } else {
+        alert("Product already saved!");
+      }
     };
 
     const displayData = () => {
       let savedItem = JSON.parse(localStorage.getItem("savedItem")) || [];
       let result = document.querySelector("#result");
-
-      result.innerHTML = " ";
-
-      savedItem.map((eachProduct) => {
-        result.innerHTML += `<div class="col-3"><div class="card" style="width: 18rem;">
-  <img src=${eachProduct?.thumbnail} class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">${eachProduct?.title}</h5>
-    <p class="card-text">${eachProduct?.description}</p>
-    <button onclick="deleteData(${eachProduct.id})" class="btn btn-primary">Delete</button>
-  </div>
-</div></div>`;
+      result.innerHTML = "";
+      savedItem.forEach((eachProduct) => {
+        result.innerHTML += ` <div class="col-3 mb-4"> <div class="card" style="width: 18rem;"> <img src="${eachProduct.thumbnail}" class="card-img-top" alt="${eachProduct.title}" style="height:200px; object-fit:cover;" > <div class="card-body"> <h5 class="card-title"> ${eachProduct.title} </h5> <p class="card-text"> ${eachProduct.description} </p> <p> <strong>Price:</strong> $${eachProduct.price} </p> <p> <strong>Category:</strong> ${eachProduct.category} </p> <button onclick="editData(${eachProduct.id})" class="btn btn-warning me-2" > Edit </button> <button onclick="deleteData(${eachProduct.id})" class="btn btn-danger" > Delete </button> </div> </div> </div> `;
       });
     };
+    const editData = (id) => {
+      let savedItem = JSON.parse(localStorage.getItem("savedItem")) || [];
+      let product = savedItem.find((eachProduct) => eachProduct.id == id);
+      if (!product) return;
+      let result = document.querySelector("#result");
+      result.innerHTML = ` <div class="col-12"> <div class="card p-4"> <h3 class="mb-4"> Edit Product </h3> <div class="mb-3"> <label class="form-label"> Thumbnail Image URL </label> <input type="text" id="editThumbnail" class="form-control" value="${product.thumbnail}" > </div> <div class="mb-3"> <label class="form-label"> Product Title </label> <input type="text" id="editTitle" class="form-control" value="${product.title}" > </div> <div class="mb-3"> <label class="form-label"> Description </label> <textarea id="editDescription" class="form-control" rows="4" >${product.description}</textarea> </div> <div class="mb-3"> <label class="form-label"> Price </label> <input type="number" id="editPrice" class="form-control" value="${product.price}" > </div> <div class="mb-3"> <label class="form-label"> Category </label> <input type="text" id="editCategory" class="form-control" value="${product.category}" > </div> <button onclick="updateData(${product.id})" class="btn btn-success me-2" > Update Product </button> <button onclick="displayData()" class="btn btn-secondary" > Cancel </button> </div> </div> `;
+    };
+    const updateData = (id) => {
+      let savedItem = JSON.parse(localStorage.getItem("savedItem")) || [];
+      let productIndex = savedItem.findIndex(
+        (eachProduct) => eachProduct.id == id,
+      );
+      if (productIndex === -1) return;
+      savedItem[productIndex].thumbnail =
+        document.querySelector("#editThumbnail").value;
+      savedItem[productIndex].title =
+        document.querySelector("#editTitle").value;
+      savedItem[productIndex].description =
+        document.querySelector("#editDescription").value;
+      savedItem[productIndex].price = Number(
+        document.querySelector("#editPrice").value,
+      );
+      savedItem[productIndex].category =
+        document.querySelector("#editCategory").value;
+      localStorage.setItem("savedItem", JSON.stringify(savedItem));
+      displayData();
+    };
     const deleteData = (id) => {
-  let savedItem =
-    JSON.parse(localStorage.getItem("savedItem")) || [];
-
-  let newArray = apiResponse.filter(
-    (eachPro) => eachPro.id != id,
-  );
-
-  localStorage.setItem("savedItem", JSON.stringify(newArray));
-  displayData()
-};
+      let savedItem = JSON.parse(localStorage.getItem("savedItem")) || [];
+      let newArray = savedItem.filter((eachProduct) => eachProduct.id != id);
+      localStorage.setItem("savedItem", JSON.stringify(newArray));
+      displayData();
+    };
   </script>
 </html>

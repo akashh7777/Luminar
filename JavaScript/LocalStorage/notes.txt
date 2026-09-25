@@ -83,7 +83,7 @@ AJAX
 • AJAX is not a programming language.
 • AJAX just uses a comnbination of: A browser buill-in XML.HTTPRequest object (to request data fron a
 web server) JavaScript and HTML DOM (to display or use the data)
-Ajax is just a means of loading data from tha; server and sclcctively updating parts of a wcb pagc without reloading the whole pagc.
+Ajax is just a means of loading data from that server and sclcctively updating parts of a wcb pagc without reloading the whole pagc.
 Basically, what Ajax does is make use of the browser's built-in XMLHtpRequest (XHR) objoct to send and receive information to and from a wcb server asynchronously, in thıe back ground, wilhoul blocking the pagc or interfering with thc user's cxperiencc.
 The examplc of somc largc-scalc Ajax-driven online applications are: Gimail, Googlc Maps, Gioogle Docs, YouTube, Faccbook, Flickr, and so many other applications. 
 
@@ -93,7 +93,7 @@ The examplc of somc largc-scalc Ajax-driven online applications are: Gimail, Goo
 
 
 Fetch API
-THe Fetch()API is a built-in modern JS interface used to make asynchronous HTTP requests. It is entirely promise-based, making it cleaner than older methods like XMLHtpRequest
+The Fetch()API is a built-in modern JS interface used to make asynchronous HTTP requests. It is entirely promise-based, making it cleaner than older methods like XMLHtpRequest
 
 
 Promise

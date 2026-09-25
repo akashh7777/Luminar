@@ -1,0 +1,31 @@
+.basics {
+  max-width: 1000px;
+  margin: auto;
+  padding: 70px 40px;
+}
+
+.basics h1 {
+  font-size: 38px;
+  margin-bottom: 15px;
+}
+
+.basics h2 {
+  font-size: 27px;
+  margin-bottom: 12px;
+}
+
+.basics .intro {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 45px;
+}
+
+.basics section {
+  margin-bottom: 45px;
+}
+
+.basics p {
+  font-size: 17px;
+  line-height: 1.8;
+}
+
